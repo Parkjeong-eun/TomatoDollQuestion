@@ -8,17 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @State private var showSplash = true
 
-#Preview {
-    ContentView()
+    var body: some View {
+        ZStack {
+            if showSplash {
+                SplashView()
+                    .transition(.opacity)
+            } else {
+                TabView {
+                    CameraPreviewView()
+                        .tabItem {
+                            Label("카메라", systemImage: "camera")
+                        }
+
+                    AnswerListView()
+                        .tabItem {
+                            Label("기록", systemImage: "list.bullet")
+                        }
+                }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    showSplash = false
+                }
+            }
+        }
+    }
 }

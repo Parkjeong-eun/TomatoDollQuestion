@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TomatoDollQuestionApp: App {
@@ -13,5 +14,6 @@ struct TomatoDollQuestionApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: AnswerEntry.self)
     }
 }
